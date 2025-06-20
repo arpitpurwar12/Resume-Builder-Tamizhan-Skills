@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Resume Builder</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <h1>Digital Resume Builder</h1>
+  <form id="resumeForm">
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="text" id="email" placeholder="Email" required />
+    <input type="text" id="phone" placeholder="Phone Number" required />
+    <input type="text" id="linkedin" placeholder="LinkedIn Profile URL" required />
+
+    <label for="photo">Upload Profile Photo:</label>
+    <input type="file" id="photo" accept="image/*" onchange="loadPhoto(event)">
+    <img id="profileImage" style="display:none; width:100px; height:100px; border-radius:50%;" />
+
+    <label for="theme">Select Resume Theme:</label>
+    <select id="theme" onchange="changeTheme()">
+      <option value="classic">Classic</option>
+      <option value="modern">Modern</option>
+    </select>
+
+    <textarea id="objective" placeholder="Career Objective" required></textarea>
+    <textarea id="education" placeholder="Education" required></textarea>
+    <textarea id="experience" placeholder="Work Experience" required></textarea>
+    <textarea id="skills" placeholder="Skills (comma-separated)" required></textarea>
+    <textarea id="projects" placeholder="Projects (comma-separated)" required></textarea>
+    <textarea id="certifications" placeholder="Certifications (comma-separated)" required></textarea>
+    <textarea id="languages" placeholder="Languages Known (comma-separated)" required></textarea>
+  </form>
+
+  <div id="preview" class="classic">
+    <img id="previewPhoto" style="width:100px; height:100px; border-radius:50%;" />
+  </div>
+
+  <button onclick="downloadPDF()">Download as PDF</button>
+
+  <script>
+    document.getElementById("resumeForm").addEventListener("input", generateResume);
+
+    function generateResume() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const linkedin = document.getElementById("linkedin").value;
+      const objective = document.getElementById("objective").value;
+      const education = document.getElementById("education").value;
+      const experience = document.getElementById("experience").value;
+      const skills = document.getElementById("skills").value.split(",");
+      const projects = document.getElementById("projects").value.split(",");
+      const certifications = document.getElementById("certifications").value.split(",");
+      const languages = document.getElementById("languages").value.split(",");
+
+      let previewHTML = `
+        <h2>${name}</h2>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank">${linkedin}</a></p>
+        <h3>Career Objective</h3>
+        <p>${objective}</p>
+        <h3>Education</h3>
+        <p>${education}</p>
+        <h3>Experience</h3>
+        <p>${experience}</p>
+        <h3>Skills</h3>
+        <ul>${skills.map(skill => `<li>${skill.trim()}</li>`).join("")}</ul>
+        <h3>Projects</h3>
+        <ul>${projects.map(proj => `<li>${proj.trim()}</li>`).join("")}</ul>
+        <h3>Certifications</h3>
+        <ul>${certifications.map(cert => `<li>${cert.trim()}</li>`).join("")}</ul>
+        <h3>Languages</h3>
+        <ul>${languages.map(lang => `<li>${lang.trim()}</li>`).join("")}</ul>
+      `;
+
+      document.getElementById("preview").innerHTML = `<img id='previewPhoto' style='width:100px; height:100px; border-radius:50%;'/><br>` + previewHTML;
+    }
+
+    function changeTheme() {
+      const theme = document.getElementById("theme").value;
+      document.getElementById("preview").className = theme;
+    }
+
+    function loadPhoto(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function () {
+        document.getElementById("profileImage").src = reader.result;
+        document.getElementById("profileImage").style.display = "block";
+        document.getElementById("previewPhoto").src = reader.result;
+      };
+      if (file) reader.readAsDataURL(file);
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById("preview");
+      html2pdf().from(element).save("resume.pdf");
+    }
+  </script>
+</body>
+</html>

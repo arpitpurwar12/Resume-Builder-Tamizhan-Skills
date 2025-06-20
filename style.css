@@ -1,0 +1,88 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+input, textarea, select {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 20px;
+  background-color: #0078d7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+#preview {
+  background-color: #fff;
+  max-width: 800px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 📘 Classic Theme */
+#preview.classic {
+  font-family: 'Georgia', serif;
+  background-color: #fffef8;
+  color: #000;
+}
+
+/* 🧊 Modern Theme */
+#preview.modern {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #eaf6f6;
+  color: #333;
+}
+
+#preview h2, #preview h3 {
+  color: #004080;
+  margin-bottom: 5px;
+}
+
+#preview ul {
+  padding-left: 20px;
+}
+
+#preview a {
+  color: #0078d7;
+  text-decoration: none;
+}
+
+#preview a:hover {
+  text-decoration: underline;
+}
